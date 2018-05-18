@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Kyle West's Digital Lab Notebook</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Lab 4 - Propagation of Uncertainty II</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11775,34 +11775,340 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="index">Tabel of Contents<a class="anchor-link" href="#index">&#182;</a></h1>
-<h3>Kyle West - 
-   <a href="https://github.com/kyle-west/PH150-LabNotebook">See the Notebook on GitHub</a>
-</h3>
-</div>
-</div>
-</div>
+<h1 id="Lab-4---Propagation-of-Uncertainty-II">Lab 4 - Propagation of Uncertainty II<a class="anchor-link" href="#Lab-4---Propagation-of-Uncertainty-II">&#182;</a></h1>
+<pre><code>    May 17, 2018
 
+</code></pre>
+<p><a href="index.html">&lt;&lt; Table of Contents</a></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ol>
-   <li><a href="Lab 1 - Introduction to Python.html">Lab 1 - Introduction to Python.html</a></li>
-   <li><a href="Lab 2 - Introduction to Measurements and Uncertainty.html">Lab 2 - Introduction to Measurements and Uncertainty</a></li>
-   <li><a href="Lab 3 - Statistical Description of Uncertainty.html">Lab 3 - Statistical Description of Uncertainty</a></li>
-   <li><a href="Lab 4 - Propagation of Uncertainty II.html">Lab 4 - Propagation of Uncertainty II</a></li>
-</ol>
+<h2 id="P4.1">P4.1<a class="anchor-link" href="#P4.1">&#182;</a></h2><p>Take the derivative of $f(x) = \sin(x) x^2$. The value of the derrivative indicates the slope of the function.</p>
+<p><sub>4.1</sub>
+$$
+f'(x) = \frac{d}{d x}\big(\sin(x) x^2\big)
+$$
+<br>
+$$
+f'(x) = \bigg(\frac{d}{d x}\sin(x)\bigg) x^2 + \bigg(\frac{d}{d x}x^2\bigg) \sin(x)
+$$
+<br>
+<sub>4.2</sub>
+$$
+f'(x) = \cos(x)x^2 + 2x\sin(x)
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="P4.2">P4.2<a class="anchor-link" href="#P4.2">&#182;</a></h2><h5 id="a)-Evaluate-equation-4.2-at-x-=-4,-x-=-5.087,-and-x-=-5.5-and-visually-verify-that-these-values-are-indeed-the-slope-of-the-function-in-the-following-figure:">a) Evaluate equation 4.2 at <code>x = 4</code>, <code>x = 5.087</code>, and <code>x = 5.5</code> and visually verify that these values are indeed the slope of the function in the following figure:<a class="anchor-link" href="#a)-Evaluate-equation-4.2-at-x-=-4,-x-=-5.087,-and-x-=-5.5-and-visually-verify-that-these-values-are-indeed-the-slope-of-the-function-in-the-following-figure:">&#182;</a></h5><p><img src="lab4_fig1.png" alt="Figure 4.1"></p>
+<p>$$
+f'(x) = \cos(x)x^2 + 2x\sin(x)
+$$
+<br><br>
+$$
+f'(4) = \cos(4)4^2 + 2(4)\sin(4) = -16.51271
+$$
+<br></p>
+<p>$$
+f'(5.087) = \cos(5.087)5.087^2 + 2(5.087)\sin(5.087) = 0.00044
+$$
+<br></p>
+<p>$$
+f'(5.5) = \cos(5.5)5.5^2 + 2(5.5)\sin(5.5) = 13.67631
+$$
+<br></p>
+<p>These indeed match the graph above.</p>
+<h5 id="(b)-In-your-lab-notebook,-write-down-a-few-sentences-describing-what-a-derivative-is.-Make-a-sketch-to-help-you-with-your-explanation.">(b) In your lab notebook, write down a few sentences describing what a derivative is. Make a sketch to help you with your explanation.<a class="anchor-link" href="#(b)-In-your-lab-notebook,-write-down-a-few-sentences-describing-what-a-derivative-is.-Make-a-sketch-to-help-you-with-your-explanation.">&#182;</a></h5><p>A derivative is simple to understand. It is the rate of change of a changing rate. In other words, it is the slope of a slope. The figure below (Figure 4.2 from the lab manual) clearly shows that a function with a non-constant slope can have instantaneous slope, which is what a derrivative is measuring.</p>
+<p><img src="lab4_fig2.png" width="300px"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="P4.3">P4.3<a class="anchor-link" href="#P4.3">&#182;</a></h2><p><sub>4.3</sub>
+$$
+f(x,t) = \sin(t) x^2
+$$</p>
+<h5 id="(a)-calculate-the-partial-derivative-of-function-4.3-with-respect-to-$x$">(a) calculate the partial derivative of function 4.3 with respect to $x$<a class="anchor-link" href="#(a)-calculate-the-partial-derivative-of-function-4.3-with-respect-to-$x$">&#182;</a></h5><p>$$
+\frac{\delta f}{\delta x} = \frac{\delta}{\delta x}\big(\sin(t) x^2\big)
+$$
+<br>
+$$
+\frac{\delta f}{\delta x} = 2x\sin(t)
+$$
+<br></p>
+<h5 id="(b)-calculate-the-partial-derivative-of-function-4.3-with-respect-to-$t$">(b) calculate the partial derivative of function 4.3 with respect to $t$<a class="anchor-link" href="#(b)-calculate-the-partial-derivative-of-function-4.3-with-respect-to-$t$">&#182;</a></h5><p>$$
+\frac{\delta f}{\delta t} = \frac{\delta}{\delta t}\big(\sin(t) x^2\big)
+$$
+<br>
+$$
+\frac{\delta f}{\delta t} = \cos(t) x^2
+$$
+<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="P4.4">P4.4<a class="anchor-link" href="#P4.4">&#182;</a></h2><p><sub>4.4</sub>
+$$
+f(x,y) = (x^2 y + y^2 x) \sin(2x-y^2)
+$$</p>
+<h5 id="(a)-calculate-the-partial-derivative-of-function-4.4-with-respect-to-$x$">(a) calculate the partial derivative of function 4.4 with respect to $x$<a class="anchor-link" href="#(a)-calculate-the-partial-derivative-of-function-4.4-with-respect-to-$x$">&#182;</a></h5><p>$$
+\frac{\delta f}{\delta x} = \frac{\delta}{\delta x}\big((x^2 y + y^2 x) \sin(2x-y^2)\big)
+$$
+<br>
+$$
+\frac{\delta f}{\delta x} = (2xy + y^2)\sin(2x-y^2) + 2(x^2 y + y^2 x)\cos(2x-y^2)
+$$
+<br></p>
+<h5 id="(b)-calculate-the-partial-derivative-of-function-4.4-with-respect-to-$y$">(b) calculate the partial derivative of function 4.4 with respect to $y$<a class="anchor-link" href="#(b)-calculate-the-partial-derivative-of-function-4.4-with-respect-to-$y$">&#182;</a></h5><p>$$
+\frac{\delta f}{\delta y} = \frac{\delta}{\delta y}\big((x^2 y + y^2 x) \sin(2x-y^2)\big)
+$$
+<br>
+$$
+\frac{\delta f}{\delta y} = (x^2 + 2xy)\sin(2x-y^2) - 2y(x^2 y + y^2 x)\cos(2x-y^2)
+$$
+<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="P4.5">P4.5<a class="anchor-link" href="#P4.5">&#182;</a></h2><p>Consider the following situation. Using a cannon, tilted at an angle $\theta = 35^\circ$,
+you launch a cannonball through the air. You’d like to predict where the
+ball will land with it’s associated uncertainty. If the ball is launched from
+level ground (lands at the same height as it was launched) you can use the
+following equation:</p>
+<p><sub>4.16</sub>
+$$
+x = \frac{v_0^2 \sin(2\theta)}{g}
+$$</p>
+<h5 id="(a)-Using-the-same-procedure-as-last-week,-calculate-the-exit-speed-of-the-sphere.-You-may-choose-the-launch-strength-setting-to-be-1-click,-2-clicks,-or-3-clicks.-Use-the-standard-deviation-from-last-week&#8217;s-data-as-your-uncertainty-on-this-speed.-Record-these-numbers-in-your-lab-notebook.">(a) Using the same procedure as last week, calculate the exit speed of the sphere. You may choose the launch-strength setting to be 1-click, 2-clicks, or 3-clicks. Use the standard deviation from last week&#8217;s data as your uncertainty on this speed. Record these numbers in your lab notebook.<a class="anchor-link" href="#(a)-Using-the-same-procedure-as-last-week,-calculate-the-exit-speed-of-the-sphere.-You-may-choose-the-launch-strength-setting-to-be-1-click,-2-clicks,-or-3-clicks.-Use-the-standard-deviation-from-last-week&#8217;s-data-as-your-uncertainty-on-this-speed.-Record-these-numbers-in-your-lab-notebook.">&#182;</a></h5><p>We launched off the rocket straight up in 5 trials. Below are the height results.</p>
+<table>
+<thead><tr>
+<th>Trial #</th>
+<th>Height (cm)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>131</td>
+</tr>
+<tr>
+<td>2</td>
+<td>130</td>
+</tr>
+<tr>
+<td>3</td>
+<td>131</td>
+</tr>
+<tr>
+<td>4</td>
+<td>130</td>
+</tr>
+<tr>
+<td>5</td>
+<td>130</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># calculate the average v0</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">131</span><span class="p">,</span><span class="mi">130</span><span class="p">,</span><span class="mi">131</span><span class="p">,</span><span class="mi">130</span><span class="p">,</span><span class="mi">130</span><span class="p">]</span>
+<span class="n">uncertainty</span><span class="o">=</span> <span class="mf">0.08</span> <span class="c1"># last weeks std</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span> <span class="c1"># m/s^2</span>
+<span class="n">velocities</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">heights</span><span class="p">]</span> 
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;v0 = </span><span class="si">{:.2f}</span><span class="s2"> ± </span><span class="si">{}</span><span class="s2"> m/s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">velocities</span><span class="p">),</span> <span class="n">uncertainty</span><span class="p">))</span>
+</pre></div>
+
 </div>
 </div>
 </div>
 
-   
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>v0 = 5.06 ± 0.08 m/s
+</pre>
 </div>
 </div>
 
+</div>
+</div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="(b)-Set-the-launch-angle-to-$35^\circ$.-Record-an-uncertainty-for-this-number.">(b) Set the launch angle to $35^\circ$. Record an uncertainty for this number.<a class="anchor-link" href="#(b)-Set-the-launch-angle-to-$35^\circ$.-Record-an-uncertainty-for-this-number.">&#182;</a></h5><p>We set the launch angle to $35.0^\circ \pm 0.5^\circ$.</p>
+<h5 id="(c)-Use-$g-=-9.81-\pm-.05-\frac{m}{s^2}$">(c) Use $g = 9.81 \pm .05 \frac{m}{s^2}$<a class="anchor-link" href="#(c)-Use-$g-=-9.81-\pm-.05-\frac{m}{s^2}$">&#182;</a></h5><h5 id="(d)-Take-three-partial-derivatives-of-function-4.16:-$\frac{\delta-f}{\delta-g}$,-$\frac{\delta-f}{\delta-\theta}$,-$\frac{\delta-f}{\delta-v_0}$-and-record-them-in-your-lab-notebook.-Evaluate-these-functions-at-the-measurement-values.">(d) Take three partial derivatives of function 4.16: $\frac{\delta f}{\delta g}$, $\frac{\delta f}{\delta \theta}$, $\frac{\delta f}{\delta v_0}$ and record them in your lab notebook. Evaluate these functions at the measurement values.<a class="anchor-link" href="#(d)-Take-three-partial-derivatives-of-function-4.16:-$\frac{\delta-f}{\delta-g}$,-$\frac{\delta-f}{\delta-\theta}$,-$\frac{\delta-f}{\delta-v_0}$-and-record-them-in-your-lab-notebook.-Evaluate-these-functions-at-the-measurement-values.">&#182;</a></h5><p>$$
+\frac{\delta f}{\delta g} = \frac{\delta}{\delta g}\bigg(\frac{v_0^2 \sin(2\theta)}{g}\bigg) 
+     = - \frac{v_0^2 \sin(2\theta)}{g^2}
+$$
+<br>
+$$
+\frac{\delta f}{\delta g} \bigg(v_0=5.06, g=9.81, \theta = 35.0\bigg) = - \frac{(5.06)^2 \sin(2(35.0))}{9.81^2} = - 0.250
+$$
+<br>
+<br></p>
+<p>$$
+\frac{\delta f}{\delta v_0} = \frac{\delta}{\delta v_0}\bigg(\frac{v_0^2 \sin(2\theta)}{g}\bigg) 
+     = \frac{2v_0 \sin(2\theta)}{g}
+$$
+<br>
+$$
+\frac{\delta f}{\delta v_0} \bigg(v_0=5.06, g=9.81, \theta = 35.0\bigg)=  \frac{2(5.06) \sin(2(35.0))}{9.81} = 0.969
+$$
+<br>
+<br></p>
+<p>$$
+\frac{\delta f}{\delta \theta} = \frac{\delta}{\delta \theta}\bigg(\frac{v_0^2 \sin(2\theta)}{g}\bigg) 
+     = \frac{2v_0^2 \cos(2\theta)}{g}
+$$
+<br>
+$$
+\frac{\delta f}{\delta \theta} \bigg(v_0=5.06, g=9.81, \theta = 35.0\bigg)= \frac{2(5.06)^2 \cos(2(35.0))}{9.81} = 1.785^\circ, 0.0137 rad
+$$
+<br>
+<br></p>
+<h5 id="(e)-Apply-equation-4.9-to-determine-the-uncertainty-in-the-range-of-your-projectile.">(e) Apply equation 4.9 to determine the uncertainty in the range of your projectile.<a class="anchor-link" href="#(e)-Apply-equation-4.9-to-determine-the-uncertainty-in-the-range-of-your-projectile.">&#182;</a></h5><p><sub>4.9</sub>
+$$
+\Delta f = \sqrt{\bigg(\frac{\Delta f}{\Delta g} \Delta g \bigg)^2</p>
 
+<pre><code>           + \bigg(\frac{\Delta f}{\Delta v_0} \Delta v_0 \bigg)^2 
+           + \bigg(\frac{\Delta f}{\Delta \theta} \Delta \theta \bigg)^2}
+</code></pre>
+<p>$$
+&lt;br&gt;
+$$
+\Delta f = \sqrt{\big(-0.250 * 0.05 \big)^2</p>
+
+<pre><code>           + \big(0.969 * 0.08 \big)^2 
+           + \big(0.0137 * 0.0087\big)^2} = 0.0785m
+</code></pre>
+<p>$$
+<br></p>
+<h5 id="(f)-Launch-the-projectile-and-observe-whether-it-lands-in-the-uncertainty-window.-Record-your-results.">(f) Launch the projectile and observe whether it lands in the uncertainty window. Record your results.<a class="anchor-link" href="#(f)-Launch-the-projectile-and-observe-whether-it-lands-in-the-uncertainty-window.-Record-your-results.">&#182;</a></h5><p>We predict that the range is: 
+$$
+x = \frac{v_0^2 \sin(2\theta)}{g} = \frac{(5.06 \frac{m}{s})^2 \sin(2(35^\circ))}{9.81\frac{m}{s^2}} = 2.452m
+$$</p>
+<p>With the calculated uncertainty: $2.452m \pm 0.0785m$ We launched the rocket, and it right on 2.44m. This was definately in the uncertainty window!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="P4.6">P4.6<a class="anchor-link" href="#P4.6">&#182;</a></h2><p>You may be familiar with a simple pendulum if you’ve ever owned a grandfather
+clock. The swinging mass is a pendulum and it’s period can be
+calculated like this</p>
+<p>$$
+T = 2\pi \sqrt{\frac{L}{g}}
+$$</p>
+<p>where $L$ is the length of the pendulum, $T$ is the period, and $g$ is the acceleration
+due to gravity. Instead of using this equation to calculate the
+period, we can measure a pendulum’s period and use the above expression
+to determine a value for the acceleration due to gravity.</p>
+<h5 id="(a)-Measure-the-length-of-the-pendulum-and-attach-an-uncertainty-to-that-measurement.">(a) Measure the length of the pendulum and attach an uncertainty to that measurement.<a class="anchor-link" href="#(a)-Measure-the-length-of-the-pendulum-and-attach-an-uncertainty-to-that-measurement.">&#182;</a></h5><p>Length = $1.25m \pm 0.001$</p>
+<h5 id="(b)-Use-the-photogate-to-measure-the-period-of-the-pendulum-and-record-it&#8217;s-uncertainty.">(b) Use the photogate to measure the period of the pendulum and record it&#8217;s uncertainty.<a class="anchor-link" href="#(b)-Use-the-photogate-to-measure-the-period-of-the-pendulum-and-record-it&#8217;s-uncertainty.">&#182;</a></h5><table>
+<thead><tr>
+<th>Trial #</th>
+<th>Time (in seconds)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>$2.2551 \pm 0.0001$</td>
+</tr>
+<tr>
+<td>2</td>
+<td>$2.2707 \pm 0.0001$</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$2.2601 \pm 0.0001$</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$2.2672 \pm 0.0001$</td>
+</tr>
+</tbody>
+</table>
+<p>The mean being: $2.2633s  \pm 0.0001s$</p>
+<h5 id="(c)-Solve-equation-4.17-for-$g$">(c) Solve equation 4.17 for $g$<a class="anchor-link" href="#(c)-Solve-equation-4.17-for-$g$">&#182;</a></h5><p>$$
+g = \frac{L}{\big(\frac{T}{2\pi}\big)^2} 
+$$</p>
+<h5 id="(d)-Plug-your-measurements-into-the-expression-for-$g$-to-calculate-it&#8217;s-value.">(d) Plug your measurements into the expression for $g$ to calculate it&#8217;s value.<a class="anchor-link" href="#(d)-Plug-your-measurements-into-the-expression-for-$g$-to-calculate-it&#8217;s-value.">&#182;</a></h5><p>$$
+g = \frac{L}{\big(\frac{T}{2\pi}\big)^2} = \frac{1.25m}{\big(\frac{2.2633s}{2\pi}\big)^2} = 9.63\frac{m}{s^2}
+$$</p>
+<h5 id="(e)-Take-two-partial-derivatives-of-the-function-for-g-that-you-got-above:">(e) Take two partial derivatives of the function for g that you got above:<a class="anchor-link" href="#(e)-Take-two-partial-derivatives-of-the-function-for-g-that-you-got-above:">&#182;</a></h5><p>$$
+\frac{\delta g}{\delta L} = \frac{\delta}{\delta L}\Bigg(\frac{L}{\big(\frac{T}{2\pi}\big)^2} \Bigg)
+      = \frac{1}{\big(\frac{T}{2\pi}\big)^2}
+$$
+<br>
+<br></p>
+
+<pre><code>DUE TO TIME CONSTRAINTs, I WAS UNABLE TO DO THE REST OF THE LAB; MISSING HALF OF THIS PROBLEM AND THE NEXT PROBLEM. I FEEL COMFORTABLE WITH THE SUBJECT THOUGH, AS P4.6 IS ESSENTIALLY A REPEAT of P4.5.</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Take-home-thoughts">Take home thoughts<a class="anchor-link" href="#Take-home-thoughts">&#182;</a></h1><p>I think the lab was helpful to getting back in the groove of calculus. It's been a couple years sice I took MATH 316. I will admit, I hated typing this lab up. LaTex is not the most friendly thing to do math in, only to write it up. I think that is part of the reason why I didn't finish. But I am proud of how clean my lab notebook looks.</p>
+<h1 id="Sign-off">Sign off<a class="anchor-link" href="#Sign-off">&#182;</a></h1><ul>
+<li>Kyle West</li>
+<li>Brandon Welch</li>
+</ul>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
 </body>
 
  
