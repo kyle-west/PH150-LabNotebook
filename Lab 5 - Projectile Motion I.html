@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Kyle West's Digital Lab Notebook</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Lab 5 - Projectile Motion I</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11775,35 +11775,531 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="index">Tabel of Contents<a class="anchor-link" href="#index">&#182;</a></h1>
-<h3>Kyle West - 
-   <a href="https://github.com/kyle-west/PH150-LabNotebook" target="_blank">See the Notebook on GitHub</a>
-</h3>
-</div>
-</div>
-</div>
+<h1 id="Lab-5---Projectile-Motion-I">Lab 5 - Projectile Motion I<a class="anchor-link" href="#Lab-5---Projectile-Motion-I">&#182;</a></h1>
+<pre><code>    May 24, 2018 &amp; May 31 2018
 
+</code></pre>
+<p><a href="index.html">&lt;&lt; Table of Contents</a></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ol>
-   <li><a href="Lab 1 - Introduction to Python.html">Lab 1 - Introduction to Python.html</a></li>
-   <li><a href="Lab 2 - Introduction to Measurements and Uncertainty.html">Lab 2 - Introduction to Measurements and Uncertainty</a></li>
-   <li><a href="Lab 3 - Statistical Description of Uncertainty.html">Lab 3 - Statistical Description of Uncertainty</a></li>
-   <li><a href="Lab 4 - Propagation of Uncertainty II.html">Lab 4 - Propagation of Uncertainty II</a></li>
-   <li><a href="Lab 5 - Projectile Motion I.html">Lab 5 - Projectile Motion I</a></li>
-</ol>
+<h2 id="P5.1">P5.1<a class="anchor-link" href="#P5.1">&#182;</a></h2><p>In this exercise you will write a Python function that calculates the range of
+a particle. In other words, this function will answer the question: "After my
+projectile has traveled $h$ meters vertically, where will it be located horizontally?"</p>
+<h5 id="(a)-Derive-the-equation-for-the-range-of-the-projectile.-First-work-in-the-y-direction-to-determine-the-time-of-flight.-Next,-use-this-time-of-flight-to-find-the-horizontal-range-of-the-projectile.-Set-the-launch-position-as-your-origin-and-let-$y_f$-be-the-height-of-the-target.-You-should-find-that:">(a) Derive the equation for the range of the projectile. First work in the y-direction to determine the time of flight. Next, use this time of flight to find the horizontal range of the projectile. Set the launch position as your origin and let $y_f$ be the height of the target. You should find that:<a class="anchor-link" href="#(a)-Derive-the-equation-for-the-range-of-the-projectile.-First-work-in-the-y-direction-to-determine-the-time-of-flight.-Next,-use-this-time-of-flight-to-find-the-horizontal-range-of-the-projectile.-Set-the-launch-position-as-your-origin-and-let-$y_f$-be-the-height-of-the-target.-You-should-find-that:">&#182;</a></h5><p><sub>5.4</sub>
+$$
+x_f = v \cos{\theta}\Bigg[ \frac{v\sin{\theta} \sqrt{v^2 \sin^2{\theta} - 2gy_f}}{g} \Bigg]
+$$</p>
+<p><img src="lab5_fig1.jpg" alt="Scratch Work"></p>
+<h5 id="(b)-Read-section-4.3-in-the-python-book-to-remind-yourself-about-python-functions.">(b) Read section 4.3 in the python book to remind yourself about python functions.<a class="anchor-link" href="#(b)-Read-section-4.3-in-the-python-book-to-remind-yourself-about-python-functions.">&#182;</a></h5><blockquote><p>I know Python better than I know english, so I did not feel the need to read.</p>
+</blockquote>
+<h5 id="(c)-Write-a-python-function-that-evaluates-equation-(5.4)-and-returns-the-range-of-the-particle-and-the-flight-time.-The-function-should-take-the-launch-speed,-launch-angle,-and-target-height-as-arguments.-The-function-should-return-the-flight-time-and-the-horizontal-landing-location-of-the-projectile.">(c) Write a python function that evaluates equation (5.4) and returns the range of the particle and the flight time. The function should take the launch speed, launch angle, and target height as arguments. The function should return the flight time and the horizontal landing location of the projectile.<a class="anchor-link" href="#(c)-Write-a-python-function-that-evaluates-equation-(5.4)-and-returns-the-range-of-the-particle-and-the-flight-time.-The-function-should-take-the-launch-speed,-launch-angle,-and-target-height-as-arguments.-The-function-should-return-the-flight-time-and-the-horizontal-landing-location-of-the-projectile.">&#182;</a></h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="c1"># speed {m/s}, angle {degrees}, target_height {meters}</span>
+<span class="k">def</span> <span class="nf">_time_of_flight</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">target_height</span><span class="p">):</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span> <span class="c1"># m/s^2</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">target_height</span><span class="p">))</span><span class="o">/</span><span class="n">g</span>
+
+<span class="c1"># speed {m/s}, angle {degrees}, target_height {meters}</span>
+<span class="k">def</span> <span class="nf">_range</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span> <span class="o">*</span> <span class="n">time</span>
+
+<span class="c1"># speed {m/s}, angle {degrees}, time {seconds}</span>
+<span class="k">def</span> <span class="nf">eval_flight</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">target_height</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">_time_of_flight</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">target_height</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">_range</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="s2">&quot;time&quot;</span> <span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="n">r</span> <span class="p">}</span>
+</pre></div>
+
 </div>
 </div>
 </div>
 
-   
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="(d)-Call-your-function-using-the-values-given-to-check-that-it-is-working-correctly.">(d) Call your function using the values given to check that it is working correctly.<a class="anchor-link" href="#(d)-Call-your-function-using-the-values-given-to-check-that-it-is-working-correctly.">&#182;</a></h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">velocities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">8.2</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">]</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="n">target_heights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.75</span><span class="p">]</span>
+<span class="n">ranges</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">velocities</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">target_heights</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TESTING: &quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="n">ranges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_flight</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ranges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>TESTING:  4.5 60 0.75
+{&#39;time&#39;: 0.46732932428882246, &#39;range&#39;: 1.0514909796498508}
+TESTING:  8.2 60 0.75
+{&#39;time&#39;: 1.3330898184338456, &#39;range&#39;: 5.465668255578768}
+TESTING:  8.5 30 0.75
+{&#39;time&#39;: 0.6197367427475226, &#39;range&#39;: 4.562015984462796}
+TESTING:  8.5 60 0.75
+{&#39;time&#39;: 1.3908185844757357, &#39;range&#39;: 5.910978984021878}
+TESTING:  4.5 30 -0.75
+{&#39;time&#39;: 0.682690124782067, &#39;range&#39;: 2.660521459383173}
+</pre>
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>the above values match the results in the book</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="P5.2">P5.2<a class="anchor-link" href="#P5.2">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="(a)-Pick-one-of-these-derivatives-(found-in-the-book)-and-verify-that-it-is-correct.-Record-the-pencil-and-paper-work-in-your-lab-notebook.">(a) Pick one of these derivatives (found in the book) and verify that it is correct. Record the pencil-and-paper work in your lab notebook.<a class="anchor-link" href="#(a)-Pick-one-of-these-derivatives-(found-in-the-book)-and-verify-that-it-is-correct.-Record-the-pencil-and-paper-work-in-your-lab-notebook.">&#182;</a></h5><p>$$
+x_f = v \cos{\theta}\Bigg[ \frac{v\sin{\theta} \sqrt{v^2 \sin^2{\theta} - 2gy_f}}{g} \Bigg]
+$$
+<br></p>
+<p>$$
+\frac{\delta x_f}{\delta y_f}= \frac{\delta}{\delta y_f} v \cos{\theta}\Bigg[ \frac{v\sin{\theta} \sqrt{v^2 \sin^2{\theta} - 2gy_f}}{g} \Bigg]
+$$
+<br></p>
+<p>$$
+\frac{\delta x_f}{\delta y_f}= \frac{\delta}{\delta y_f} 
+    \frac{v^2 \cos{\theta} \sin{\theta}}{g} + \frac{v\cos{\theta} \big(v^2 \sin^2{\theta} - 2gy_f)^{\frac{1}{2}}}{g}  
+$$
+<br></p>
+<p>$$
+\frac{\delta x_f}{\delta y_f}= \frac{\delta}{\delta y_f} 
+    \frac{2 g v\cos{\theta}}{2g \big(v^2 \sin^2{\theta} - 2gy_f)^{\frac{1}{2}}}  
+$$
+<br></p>
+<p>$$
+\frac{\delta x_f}{\delta y_f}= \frac{\delta}{\delta y_f} 
+    \frac{v\cos{\theta}}{\big(v^2 \sin^2{\theta} - 2gy_f)^{\frac{1}{2}}}  
+$$
+<br>
+<br></p>
+<blockquote><p>this matches the result (5.9) in the book</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="(b)-Use-equations-(5.5)---(5.9)-to-construct-a-Python-function-to-calculate-the-uncertainty-in-the-range.">(b) Use equations (5.5) - (5.9) to construct a Python function to calculate the uncertainty in the range.<a class="anchor-link" href="#(b)-Use-equations-(5.5)---(5.9)-to-construct-a-Python-function-to-calculate-the-uncertainty-in-the-range.">&#182;</a></h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">PartialDerivative</span><span class="p">:</span>
+    <span class="c1"># v (velocity), t (angle), y (height)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span> <span class="c1"># m/s^2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v2</span> <span class="o">=</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v_sin</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v_cos</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sin2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sin</span><span class="o">**</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">v2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sin2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">*</span><span class="n">y</span><span class="p">))</span>
+        
+
+    <span class="k">def</span> <span class="nf">with_respect_to_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">term1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cos</span><span class="o">*</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">v_sin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">square</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">)</span>
+        <span class="n">term2</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cos</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">)</span> <span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sin</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">sin2</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">square</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span>
+    
+    
+    <span class="k">def</span> <span class="nf">with_respect_to_theta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">term1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_sin</span> <span class="o">*</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">v_sin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">square</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">)</span>
+        <span class="n">term2</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cos</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cos</span> <span class="o">+</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">v2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">sin</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">cos</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">square</span><span class="p">))</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span>
+    
+    
+    <span class="k">def</span> <span class="nf">with_respect_to_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v_cos</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">square</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">rangeUncertainty</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">deltaV</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span><span class="n">deltaTheta</span><span class="p">,</span> <span class="n">finalHeight</span><span class="p">,</span><span class="n">deltaHeight</span><span class="p">):</span>
+    <span class="n">PD</span> <span class="o">=</span> <span class="n">PartialDerivative</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">finalHeight</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">PD</span><span class="o">.</span><span class="n">with_respect_to_velocity</span><span class="p">()</span> <span class="o">*</span> <span class="n">deltaV</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">PD</span><span class="o">.</span><span class="n">with_respect_to_theta</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">deltaTheta</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">PD</span><span class="o">.</span><span class="n">with_respect_to_height</span><span class="p">()</span> <span class="o">*</span> <span class="n">deltaHeight</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="(c)-Call-your-function-using-the-values-below-to-verify-that-it-is-working-correctly.">(c) Call your function using the values below to verify that it is working correctly.<a class="anchor-link" href="#(c)-Call-your-function-using-the-values-below-to-verify-that-it-is-working-correctly.">&#182;</a></h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># sets of tuples {(value, uncertainty)}</span>
+<span class="n">vel</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">4.5</span><span class="p">,</span><span class="o">.</span><span class="mi">03</span><span class="p">),</span> <span class="p">(</span><span class="mf">8.2</span><span class="p">,</span><span class="o">.</span><span class="mi">03</span><span class="p">),</span> <span class="p">(</span><span class="mf">8.5</span><span class="p">,</span><span class="o">.</span><span class="mi">03</span><span class="p">),</span> <span class="p">(</span><span class="mf">8.5</span><span class="p">,</span><span class="o">.</span><span class="mi">03</span><span class="p">),</span> <span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="o">.</span><span class="mi">03</span><span class="p">)]</span>
+<span class="n">ang</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">60</span><span class="p">,</span><span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mf">0.1</span><span class="p">),</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">y_f</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.025</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.025</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.01</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.01</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.025</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vel</span><span class="p">,</span> <span class="n">ang</span><span class="p">,</span> <span class="n">y_f</span><span class="p">):</span>
+    <span class="n">un</span> <span class="o">=</span> <span class="n">rangeUncertainty</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;RANGE UNCERTAINTY: </span><span class="si">{}</span><span class="s2">±</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">±</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">±</span><span class="si">{}</span><span class="s2"> ==&gt; </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">un</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
 
 
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>RANGE UNCERTAINTY: 4.5±0.03, 60±1.0, 0.75±0.025 ==&gt; 0.09688466895508206
+RANGE UNCERTAINTY: 8.2±0.03, 60±1.0, 0.75±0.025 ==&gt; 0.11042641610909386
+RANGE UNCERTAINTY: 8.5±0.03, 30±0.5, 0.75±0.01 ==&gt; 0.15251650901236571
+RANGE UNCERTAINTY: 8.5±0.03, 30±0.1, 0.75±0.01 ==&gt; 0.07229290537493593
+RANGE UNCERTAINTY: 4.5±0.03, 30±1.0, -0.75±0.025 ==&gt; 0.037262357842082657
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>These values match the numbers in the book</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="P5.3">P5.3<a class="anchor-link" href="#P5.3">&#182;</a></h2><p>Now we need to search for the angle that will cause the projectile to hit the
+target. The idea here is to consider a large number of launch angles. For
+each launch angle we check to see if the target was hit. If it was, we stop, if
+we didn’t let’s keep checking more launch angles. This idea is depicted in
+figures 5.1 and 5.2. Follow the steps below to implement this.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="(a)-Read-chapter-6-in-the-python-book-to-learn-about-loops-and-logic.">(a) Read chapter 6 in the python book to learn about loops and logic.<a class="anchor-link" href="#(a)-Read-chapter-6-in-the-python-book-to-learn-about-loops-and-logic.">&#182;</a></h5><blockquote><p>I don't need to read the chapter, I am VERY familiar with loops and logic.</p>
+</blockquote>
+<h5 id="(b)-To-search-for-the-right-launch-angle,-let&#8217;s-pick-a-range-of-launch-angles-and-loop-over-them.-For-each-launch-angle,-we&#8217;ll-calculate-the-landing-location-of-the-projectile-and-it&#8217;s-associated-uncertainty.-If-the-target&#8217;s-location-falls-within-the-uncertainty-window,-we&#8217;ll-stop.-If-it-didn&#8217;t,-we&#8217;ll-keep-going-with-the-loop-until-it-does.">(b) To search for the right launch angle, let&#8217;s pick a range of launch angles and loop over them. For each launch angle, we&#8217;ll calculate the landing location of the projectile and it&#8217;s associated uncertainty. If the target&#8217;s location falls within the uncertainty window, we&#8217;ll stop. If it didn&#8217;t, we&#8217;ll keep going with the loop until it does.<a class="anchor-link" href="#(b)-To-search-for-the-right-launch-angle,-let&#8217;s-pick-a-range-of-launch-angles-and-loop-over-them.-For-each-launch-angle,-we&#8217;ll-calculate-the-landing-location-of-the-projectile-and-it&#8217;s-associated-uncertainty.-If-the-target&#8217;s-location-falls-within-the-uncertainty-window,-we&#8217;ll-stop.-If-it-didn&#8217;t,-we&#8217;ll-keep-going-with-the-loop-until-it-does.">&#182;</a></h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">hit_the_target</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="n">xf</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">uncertainty</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;angle&#39;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;velocity&#39;</span><span class="p">:</span><span class="mf">1.0</span> <span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">}):</span>
+    <span class="n">acceptable_angles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">91</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">uncert</span> <span class="o">=</span> <span class="n">rangeUncertainty</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">[</span><span class="s1">&#39;velocity&#39;</span><span class="p">],</span> <span class="n">angle</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">[</span><span class="s1">&#39;angle&#39;</span><span class="p">],</span> <span class="n">height</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">])</span>
+        <span class="n">calculatedRange</span> <span class="o">=</span> <span class="n">eval_flight</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">height</span><span class="p">)[</span><span class="s1">&#39;range&#39;</span><span class="p">];</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">calculatedRange</span> <span class="o">-</span> <span class="n">xf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">uncert</span><span class="p">:</span>
+            <span class="n">acceptable_angles</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;angle&#39;</span><span class="p">:</span> <span class="n">angle</span><span class="p">,</span> <span class="s1">&#39;uncertainty&#39;</span><span class="p">:</span> <span class="n">uncert</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">acceptable_angles</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">uncertainty</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;angle&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;velocity&#39;</span><span class="p">:</span> <span class="mf">0.08</span> <span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">025</span><span class="p">}</span>
+<span class="n">hits</span> <span class="o">=</span> <span class="n">hit_the_target</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">uncertainty</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">hit</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;angle&#39;: 54, &#39;uncertainty&#39;: 0.3560004306214983}
+{&#39;angle&#39;: 69, &#39;uncertainty&#39;: 0.08605357092563823}
+{&#39;angle&#39;: 70, &#39;uncertainty&#39;: 0.08552763306039197}
+{&#39;angle&#39;: 71, &#39;uncertainty&#39;: 0.08514467274726854}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="P5.3">P5.3<a class="anchor-link" href="#P5.3">&#182;</a></h2><p>In preparation for B. Nelson’s “test” of your code, calculate the exit speed
+for <em>all three clicks</em> on your launcher. When B. Nelson gives you a target to
+hit, you will be free to choose any of the three clicks to hit the target. Now
+test your code on several scenarios. Be sure to attempt to hit a target that
+is both <em>above</em> and below the launcher. When you feel confident that your
+code is working correctly, call B. Nelson over and he will give you a target to
+hit. You will then have 1minute to measure the target’s x-y coordinates and
+1 minute to determine the correct launch angle and hit the target.</p>
+<blockquote><p>Below are our targets, our cannon was broken, so we could not fire with <code>1</code> click</p>
+</blockquote>
+<table>
+<thead><tr>
+<th>Clicks</th>
+<th>Height (m)</th>
+<th>Exit Velocity (m/s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.666</td>
+<td>3.615</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1.256</td>
+<td>4.964</td>
+</tr>
+</tbody>
+</table>
+<p><sub>Below is the work used to calculate the velocities<sub></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># calculate</span>
+<span class="n">click_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mf">9.81</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mf">0.666</span><span class="p">,</span> <span class="mf">1.256</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">click_velocity</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[nan, 3.614819497568309, 4.964143430643397]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="THE-TEST">THE TEST<a class="anchor-link" href="#THE-TEST">&#182;</a></h3><p>Below are the calculations for Brother Nelson's test. The coordinates are represented in a touple <code>(x, y)</code> in meters.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">target_coordinates</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">1.085</span> <span class="o">-</span> <span class="mf">1.03</span><span class="p">)</span>
+<span class="n">uncertainty</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;angle&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;velocity&#39;</span><span class="p">:</span> <span class="mf">0.08</span> <span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="o">.</span><span class="mi">025</span><span class="p">}</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Calculating clicks and angles needed to hit a target at&quot;</span><span class="p">,</span> <span class="n">target_coordinates</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">click</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">hits</span> <span class="o">=</span> <span class="n">hit_the_target</span><span class="p">(</span><span class="n">click_velocity</span><span class="p">[</span><span class="n">click</span><span class="p">],</span> <span class="n">target_coordinates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">target_coordinates</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">uncertainty</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">click</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;CLICK ---------------- &quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   &#39;</span><span class="p">,</span> <span class="n">hit</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Calculating clicks and angles needed to hit a target at (1.8, 0.05499999999999994)
+1 CLICK ---------------- 
+2 CLICK ---------------- 
+3 CLICK ---------------- 
+    {&#39;angle&#39;: 23, &#39;uncertainty&#39;: 0.16514338007027227}
+    {&#39;angle&#39;: 24, &#39;uncertainty&#39;: 0.15905759649144183}
+    {&#39;angle&#39;: 25, &#39;uncertainty&#39;: 0.15335358812656427}
+    {&#39;angle&#39;: 26, &#39;uncertainty&#39;: 0.1479537270055894}
+    {&#39;angle&#39;: 27, &#39;uncertainty&#39;: 0.14280361378726933}
+    {&#39;angle&#39;: 65, &#39;uncertainty&#39;: 0.1272834101529765}
+    {&#39;angle&#39;: 66, &#39;uncertainty&#39;: 0.1304345169337219}
+    {&#39;angle&#39;: 67, &#39;uncertainty&#39;: 0.13354042857772386}
+    {&#39;angle&#39;: 68, &#39;uncertainty&#39;: 0.136588867387097}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>We successfully hit the target <code>(1.8, 0.055)</code> meters away with the cannon set at $66.5^\circ$.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Take-home-thoughts">Take home thoughts<a class="anchor-link" href="#Take-home-thoughts">&#182;</a></h1><p>This was the most fun lab so far. I will be honest that I don't like typing math functions, but we were successful so it all pays off. I am glad we took two weeks because we needed it. I am pretty happy with the results.</p>
+<h1 id="Signing-off">Signing off<a class="anchor-link" href="#Signing-off">&#182;</a></h1><ul>
+<li>Kyle West</li>
+<li>Landon Lewis</li>
+</ul>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
 </body>
 
  
