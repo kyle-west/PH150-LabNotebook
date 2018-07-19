@@ -1,6 +1,7 @@
 ##############################################################################
-# UncertainValue
-#     (c) 2018 Kyle West
+# @class UncertainValue
+#     (c) 2018 Kyle West - kyle-west@github.com
+#     MIT License. See: [Licensing Info](https://opensource.org/licenses/MIT)
 # 
 # Create a value from a random +/- uncertainty which can be treated like a
 # float or integer. 
@@ -15,10 +16,17 @@ class UncertainValue:
         self.v = value
         self.u = uncertainty
         self.resample()
-
-    def resample(self):
-      self.value = uniform(self.v - self.u, self.v + self.u)
         
+    def resample(self):
+        self.value = uniform(self.v - self.u, self.v + self.u)
+        return self.value
+        
+    def get(self):
+        return self.value
+
+    def __float__(self):
+        return self.get()
+    
     def __radd__(self, other):     return other + self.get()
     def __rmul__(self, other):     return other * self.get()
     def __rlt__(self, other) :     return other < self.get()
@@ -30,12 +38,6 @@ class UncertainValue:
     def __req__(self, other):      return other == self.get()
     def __rne__(self, other):      return other != self.get()
     def __rgt__(self, other):      return other > self.get()
-    
-    def get(self):
-        return self.value
-
-    def __float__(self):
-        return self.get()
     
     def __add__(self, other):
         if isinstance(other, self.__class__):
